@@ -21,3 +21,8 @@ blog: html
 	# sh deploy.sh
 	cd ~/pool/blog/invibe/ ; nikola build ; nikola deploy
 	open http://blog.invibe.net/files/$(SRC).html
+
+
+github:
+	git commit -am' compiling using make'
+	git push

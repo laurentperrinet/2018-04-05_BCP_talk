@@ -28,6 +28,7 @@ home = os.environ['HOME']
 # see https://github.com/laurentperrinet/slides.py
 from slides import Slides
 height_px = 80
+height_ratio = .7
 
 meta = dict(
  embed = True,
@@ -38,18 +39,25 @@ meta = dict(
  # height= 1024, #1000,
  margin= 0.1618,#
  #  reveal_path = 'file://' + home + '/nextcloud/libs/slides.py/reveal.js/',
- reveal_path = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/',
+            # reveal_path = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/',
  #reveal_path = 'https://s3.amazonaws.com/hakim-static/reveal-js/',
+ #reveal_path = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/',
+ #reveal_path = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/',
+ reveal_path = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/',
  #theme='night',
  #theme='sky',
- theme='black',
+ #theme='black',
  #theme='White',
+ theme='simple',
+ #theme='White',
+ bgcolor = "white",
  author='Laurent Perrinet and Chloé Pasturel and Anna Montagnini, INT',
  #author_link='Chloé Pasturel, Laurent Perrinet and Anna Montagnini',
  author_link='<a href="http://invibe.net">Laurent Perrinet</a>, Chloé Pasturel and Anna Montagnini',
  short_title='Principles and psychophysics of Active Inference', # "Estimating and anticipating a dynamic probabilistic bias in visual motion direction",
  title='Principles and psychophysics of Active Inference',
  conference_url='https://opt-infer-brain.sciencesconf.org/',
+ short_conference='PhD program in  Neuroscience, Marseille - March 27th, 2018',
  conference='Probabilities and Optimal Inference to Understand the Brain',
  location='INT, Marseille (France)',
  YYYY = YYYY,
@@ -109,10 +117,10 @@ if do_section[i_section]:
     ## Intro - 5''
     #################################################################################
     #################################################################################
-    figpath_aSPEM = os.path.join(home, 'nextcloud/libs/slides.py/figures/')
+    figpath_slides = os.path.join(home, 'nextcloud/libs/slides.py/figures/')
     s.hide_slide(content=s.content_figures(
         #[os.path.join(figpath_bcp, 'qr.png')], bgcolor="black",
-        [os.path.join(figpath_aSPEM, 'mire.png')], bgcolor="black",
+        [os.path.join(figpath_slides, 'mire.png')], bgcolor=meta['bgcolor'],
         height=s.meta['height']*.90),
         #image_fname=os.path.join(figpath_aSPEM, 'mire.png'),
         notes="""
@@ -135,7 +143,7 @@ if do_section[i_section]:
     # intro += s.content_figures(
     # [os.path.join(figpath_aSPEM, "troislogos.png")], bgcolor="black",
     # height=s.meta['height']*.2, width=s.meta['height']*.75)
-    intro += s.content_imagelet(os.path.join(figpath_aSPEM, "troislogos.png"), s.meta['height']*.2) #bgcolor="black",
+    intro += s.content_imagelet(os.path.join(figpath_slides, "troislogos.png"), s.meta['height']*.2) #bgcolor="black",
     intro += s.content_imagelet(os.path.join(figpath_bcp, 'qr.png'), s.meta['height']*.2) #bgcolor="black",
     # height=s.meta['height']*.2, width=s.meta['height']*.2)
     # {Acknowledgements}
@@ -151,10 +159,34 @@ if do_section[i_section]:
     * (ACKNO) this endeavour involves different techniques, tools and... persons. From the head on, I wish to thank the people who collaborated to this project and in particular Rick Adams and Karl Friston and the Wellcome Trust Centre for Neuroimaging for providing the tools for a successful visit / but also Mina, Guillaume and Anna for the great oppportunity to link  theories with psychophysical data; Wahiba, Giacomo and Frédéric for the challenging task of linking such models to the neural activity in NHP, and finally Jean-Bernard, Sohir and Laurent Madelain for their essential knowledge in adaptation and reinforcement.
 
 
+ """)
+
+    figpath = 'figures'
+
+    figname = os.path.join(figpath_bcp, 'qr.png')
+    if not os.path.isfile(figname):
+        # https://pythonhosted.org/PyQRCode/rendering.html
+        # pip3 install pyqrcode
+        # pip3 install pypng
+        import pyqrcode as pq
+
+        code = pq.create(meta['url'])
+        code.png(figname, scale=5)
+
+    s.add_slide(content=s.content_figures([figname], cell_bgcolor=meta['bgcolor'], height=s.meta['height']*height_ratio) + '<BR><a href="{url}"> {url} </a>'.format(url= meta['url']),
+    notes=""" All the material is available online - please flash this QRcode this leads to a page with
+
+
      """)
+    s.add_slide(content=intro,
+        notes="""
 
+* (SHOW TITLE) of interest for biologists to understand what the neural activity (or behavior) they record relates to something relevant (a function, a particular object)
 
-    s.close_section()
+* here, I will try to introduce you to the concept that Probabilities and Bayesian inference can offer a language to alleviate this question
+
+            """)
+
 
 figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
 
