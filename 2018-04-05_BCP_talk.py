@@ -57,7 +57,7 @@ meta = dict(
  short_title='Principles and psychophysics of Active Inference', # "Estimating and anticipating a dynamic probabilistic bias in visual motion direction",
  title='Principles and psychophysics of Active Inference',
  conference_url='https://opt-infer-brain.sciencesconf.org/',
- short_conference='PhD program in  Neuroscience, Marseille - March 27th, 2018',
+ short_conference='Bayesian WS, Marseille - April 5th, 2018',
  conference='Probabilities and Optimal Inference to Understand the Brain',
  location='INT, Marseille (France)',
  YYYY = YYYY,
@@ -74,7 +74,7 @@ wiki_extras="""
 <<Include(PaceItnAknow)>>
 ----
 TagYear18 TagTalks TagPublicationsProceedings [[TagPACEItn]]""",
- sections= ['A  dynamic probabilistic bias in visual motion direction',
+ sections= ['Motivation', #A dynamic probabilistic bias in visual motion direction',
     'Raw psychophysical results',
     'The Bayesian Changepoint Detector',
     'Results using the BCP']
@@ -136,6 +136,7 @@ if do_section[i_section]:
     http://pne.people.si.umich.edu/PDF/howtotalk.pdf
 
      """)
+
     intro = """
     <h2 class="title">{title}</h2>
     <h3>{author_link}</h3>
@@ -150,6 +151,7 @@ if do_section[i_section]:
     intro += """
     <h4><a href="{conference_url}">{conference}</a></h4>
     """.format(**meta)
+
     s.add_slide(content=intro,
             notes="""
     * (AUTHOR) Hi, I am Laurent Perrinet from (LOGO) the Institute de Neurosciences de la Timone in Marseille, a joint unit from the CNRS and AMU. Using computational models, I am investigating the link between the efficiency of behavioural responses in vision, their underlying neural code and their adaptation to the structure of the world.
@@ -174,10 +176,7 @@ if do_section[i_section]:
         code.png(figname, scale=5)
 
     s.add_slide(content=s.content_figures([figname], cell_bgcolor=meta['bgcolor'], height=s.meta['height']*height_ratio) + '<BR><a href="{url}"> {url} </a>'.format(url= meta['url']),
-    notes=""" All the material is available online - please flash this QRcode this leads to a page with
-
-
-     """)
+    notes=""" All the material is available online - please flash this QRcode this leads to a page with """)
     s.add_slide(content=intro,
         notes="""
 
@@ -185,8 +184,9 @@ if do_section[i_section]:
 
 * here, I will try to introduce you to the concept that Probabilities and Bayesian inference can offer a language to alleviate this question
 
-            """)
+""")
 
+    s.close_section()
 
 figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
 
@@ -232,7 +232,7 @@ if do_section[i_section]:
     ############################################################################
     title = meta['sections'][i_section-1]
     s.add_slide_outline(i_section-1)
-    for txt in ['Fonction_Fit', 'Fit_vitesse']:
+    for txt in ['Fit_vitesse', 'Fonction_Fit']:
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, txt + '.png')],
                 title=title, height=s.meta['height']*.825),
@@ -261,6 +261,7 @@ try:
     os.mkdir(figpath_bcp)
 except:
     pass
+
 import bayesianchangepoint as bcp
 import numpy as np
 import matplotlib.pyplot as plt
@@ -272,7 +273,6 @@ if do_section[i_section]:
     s.add_slide_outline(i_section-1)
     ############################################################################
     title = meta['sections'][i_section-1]
-
 
     for txt in ['1', '2', '3']:
         s.add_slide(content=s.content_figures(

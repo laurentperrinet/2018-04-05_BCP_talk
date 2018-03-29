@@ -20,7 +20,7 @@ blog: html
 	cp $(SRC).html  ~/pool/blog/invibe/files
 	# sh deploy.sh
 	cd ~/pool/blog/invibe/ ; nikola build ; nikola deploy
-	open http://blog.invibe.net/files/$(SRC).html
+	open -a safari  http://blog.invibe.net/files/$(SRC).html
 
 
 github:
