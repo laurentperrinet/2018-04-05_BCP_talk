@@ -6,7 +6,12 @@ __licence__ = 'BSD licence'
 DEBUG = True
 DEBUG = False
 
-figpath_bcp = 'figures' # os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
+import os
+home = os.environ['HOME']
+figpath_talkbcp = 'figures' # os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
+figpath_GDR = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
+figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/figures')
+figpath_ms = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/ms/figures')
 
 
 import sys
@@ -21,9 +26,6 @@ print('😎 Welcome to the script generating the slides for ', tag)
 YYYY = int(tag[:4])
 MM = int(tag[5:7])
 DD = int(tag[8:10])
-
-import os
-home = os.environ['HOME']
 
 # see https://github.com/laurentperrinet/slides.py
 from slides import Slides
@@ -54,8 +56,8 @@ meta = dict(
  author='Laurent Perrinet and Chloé Pasturel and Anna Montagnini, INT',
  #author_link='Chloé Pasturel, Laurent Perrinet and Anna Montagnini',
  author_link='<a href="http://invibe.net">Laurent Perrinet</a>, Chloé Pasturel and Anna Montagnini',
- short_title='Principles and psychophysics of Active Inference', # "Estimating and anticipating a dynamic probabilistic bias in visual motion direction",
- title='Principles and psychophysics of Active Inference',
+   short_title='Principles and psychophysics of Active Inference',
+ title='Principles and psychophysics of Active Inference: Anticipating a dynamic, switching probabilistic bias in visual motion direction',
  conference_url='https://opt-infer-brain.sciencesconf.org/',
  short_conference='Bayesian WS, Marseille - April 5th, 2018',
  conference='Probabilities and Optimal Inference to Understand the Brain',
@@ -83,7 +85,7 @@ TagYear18 TagTalks TagPublicationsProceedings [[TagPACEItn]]""",
 # https://pythonhosted.org/PyQRCode/rendering.html
 # pip3 install pyqrcode
 # pip3 install pypng
-figname = os.path.join(figpath_bcp, 'qr.png')
+figname = os.path.join(figpath_talkbcp, 'qr.png')
 if not os.path.isfile(figname):
     import pyqrcode as pq
 
@@ -94,7 +96,7 @@ if not os.path.isfile(figname):
 do_section = [True] * (len(meta['sections']) + 2)
 i_section = 0
 s = Slides(meta)
-s.meta['Acknowledgements'] = '', #s.content_imagelet(os.path.join(figpath_bcp, 'qr.png'), height_px),
+s.meta['Acknowledgements'] = '', #s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), height_px),
 #
 # s.meta['Acknowledgements'] ="""<h3>Acknowledgements:</h3>
 #    <ul>
@@ -119,7 +121,7 @@ if do_section[i_section]:
     #################################################################################
     figpath_slides = os.path.join(home, 'nextcloud/libs/slides.py/figures/')
     s.hide_slide(content=s.content_figures(
-        #[os.path.join(figpath_bcp, 'qr.png')], bgcolor="black",
+        #[os.path.join(figpath_talkbcp, 'qr.png')], bgcolor="black",
         [os.path.join(figpath_slides, 'mire.png')], bgcolor=meta['bgcolor'],
         height=s.meta['height']*.90),
         #image_fname=os.path.join(figpath_aSPEM, 'mire.png'),
@@ -145,7 +147,7 @@ if do_section[i_section]:
     # [os.path.join(figpath_aSPEM, "troislogos.png")], bgcolor="black",
     # height=s.meta['height']*.2, width=s.meta['height']*.75)
     intro += s.content_imagelet(os.path.join(figpath_slides, "troislogos.png"), s.meta['height']*.2) #bgcolor="black",
-    intro += s.content_imagelet(os.path.join(figpath_bcp, 'qr.png'), s.meta['height']*.2) #bgcolor="black",
+    intro += s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), s.meta['height']*.2) #bgcolor="black",
     # height=s.meta['height']*.2, width=s.meta['height']*.2)
     # {Acknowledgements}
     intro += """
@@ -165,7 +167,7 @@ if do_section[i_section]:
 
     figpath = 'figures'
 
-    figname = os.path.join(figpath_bcp, 'qr.png')
+    figname = os.path.join(figpath_talkbcp, 'qr.png')
     if not os.path.isfile(figname):
         # https://pythonhosted.org/PyQRCode/rendering.html
         # pip3 install pyqrcode
@@ -188,8 +190,11 @@ if do_section[i_section]:
 
     s.close_section()
 
-figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
+figpath_GDR = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
+figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/figures')
 
+
+######################## MOTIVATION #################################
 i_section += 1
 if do_section[i_section]:
     s.open_section()
@@ -197,29 +202,46 @@ if do_section[i_section]:
     s.add_slide_outline(i_section-1)
 
     s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, 'materiel_recording.png')],
-            title=title, height=s.meta['height']*.825),
+    [os.path.join(figpath_aSPEM, 'protocol_recording.png')],
+            title=title + ' - a Real-life example', height=s.meta['height']*.825*.001), # HACK
+    notes="""
+
+    """)
+
+    s.add_slide(content=s.content_figures(
+    [os.path.join(figpath_aSPEM, 'protocol_recording.png')],
+            title=title + ' - Eye Movements', height=s.meta['height']*.825),
     notes="""
 
     """)
 
     for txt in ['1', '2']:
         s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, 'image_anna_' + txt + '.png')],
-                title=title, height=s.meta['height']*.825),
+    [os.path.join(figpath_GDR, 'image_anna_' + txt + '.png')],
+                title=title + ' - Eye Movements', height=s.meta['height']*.825),
        notes="""
 
     """)
+
+    for tag in ['Experiment_classique_', 'Experiment_randomblock_']:
+        for txt in [str(i) for i in range(4)]:
+            s.add_slide(content=s.content_figures(
+        [os.path.join(figpath_aSPEM, tag + txt + '.png')],
+                    title=title + ' - Eye Movements', height=s.meta['height']*.775),
+           notes="""
+
+        """)
+
     s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, 'exp.png')],
-            title=title, height=s.meta['height']*.825),
+    [os.path.join(figpath_aSPEM, 'Experiment_randomblock.png')],
+            title=title + ' - Random-length block design', height=s.meta['height']*.825),
     notes="""
 
     """)
 
     s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, 'materiel_bet.png')],
-            title=title, height=s.meta['height']*.825),
+    [os.path.join(figpath_aSPEM, 'protocol_bet.png')],
+            title=title + ' - Random-length block design', height=s.meta['height']*.825),
     notes="""
 
     """)
@@ -232,25 +254,58 @@ if do_section[i_section]:
     ############################################################################
     title = meta['sections'][i_section-1]
     s.add_slide_outline(i_section-1)
+
+
+    s.add_slide(content=s.content_figures(
+    [os.path.join(figpath_aSPEM, 'Experiment_randomblock.png')],
+            title=title + ' - Random-length block design', height=s.meta['height']*.825),
+    notes="""
+
+    """)
+
+
+    s.add_slide(content=s.content_figures(
+    [os.path.join(figpath_aSPEM, 'Experiment_randomblock_bet.png')],
+            title=title, height=s.meta['height']*.825),
+    notes="""
+
+    """)
+
+
+    # for txt in ['results_pari', 'results_enregistrement']:
+    #     s.add_slide(content=s.content_figures(
+    # [os.path.join(figpath_GDR, txt + '.png')],
+    #             title=title, height=s.meta['height']*.825),
+    #    notes="""
+    #
+    # """)
+
+
     for txt in ['Fit_vitesse', 'Fonction_Fit']:
         s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, txt + '.png')],
-                title=title, height=s.meta['height']*.825),
+    [os.path.join(figpath_ms, txt + '.png')],
+                title=title + ' - Fitting eye movements', height=s.meta['height']*.825),
        notes="""
 
     """)
 
-    for txt in ['results_pari', 'results_enregistrement']:
-        s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, txt + '.png')],
-                title=title, height=s.meta['height']*.825),
-       notes="""
+    s.add_slide(content=s.content_figures(
+    [os.path.join(figpath_aSPEM, 'Experiment_randomblock_EM.png')],
+            title=title, height=s.meta['height']*.825),
+    notes="""
+
+    """)
+
+    s.add_slide(content=s.content_figures(
+    [os.path.join(figpath_aSPEM, 'Experiment_randomblock_bet_EM.png')],
+            title=title, height=s.meta['height']*.825),
+    notes="""
 
     """)
 
     for txt in ['P_real', 'p_bet--v_a']:
         s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, txt + '.png')],
+    [os.path.join(figpath_GDR, txt + '.png')],
                 title=title, height=s.meta['height']*.75),
        notes="""
 
@@ -258,7 +313,7 @@ if do_section[i_section]:
     s.close_section()
 
 try:
-    os.mkdir(figpath_bcp)
+    os.mkdir(figpath_talkbcp)
 except:
     pass
 
@@ -274,9 +329,18 @@ if do_section[i_section]:
     ############################################################################
     title = meta['sections'][i_section-1]
 
-    for txt in ['1', '2', '3']:
+    s.add_slide(content=s.content_figures(
+    [os.path.join(figpath_GDR, 'exp.png')],
+            title=title, height=s.meta['height']*.825),
+    notes="""
+
+    """)
+
+    tag = 'bcp_model_layer_' #  'model_bcp_'
+
+    for txt in [str(i) for i in range(1, 6)]:
         s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_bcp, 'model_bcp_' + txt + '.png')],
+    [os.path.join(figpath_aSPEM, tag + txt + '.png')],
                 title=title, height=s.meta['height']*.775),
        notes="""
 
@@ -374,7 +438,7 @@ URL = "http://arxiv.org/abs/0710.3742"
     # """)
 
     s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_bcp, 'github.png')],
+    [os.path.join(figpath_talkbcp, 'github.png')],
             title=title, height=s.meta['height']*.825),
     notes="""
 
@@ -384,7 +448,7 @@ URL = "http://arxiv.org/abs/0710.3742"
     modes = ['max'] # 'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
     for mode in modes:
 
-        figname = os.path.join(figpath_bcp, 'bayesianchangepoint_' + mode + '.png')
+        figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_' + mode + '.png')
         if not os.path.isfile(figname):
 
             T = 400
@@ -423,7 +487,7 @@ if do_section[i_section]:
 
     for i_block in range(3):
         for mode in modes:
-            figname = os.path.join(figpath_bcp, 'bayesianchangepoint_exp_' + mode + '_' + str(i_block) + '.png')
+            figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_exp_' + mode + '_' + str(i_block) + '.png')
             if not os.path.isfile(figname):
 
                 seed = 42
@@ -447,24 +511,35 @@ if do_section[i_section]:
                 fig.savefig(figname, dpi=400)
 
             s.add_slide(content=s.content_figures([figname],
-                        title=title, height=s.meta['height']*.825),
+                        title=title +  ' - inference with BCP', height=s.meta['height']*.825),
                notes="""
 
             """)
-    tag = 'results_bayesianchangepoint_'
-    for txt in [tag + 'm', tag + 'e']:
+    # tag = 'results_bayesianchangepoint_'
+    # for txt in [tag + 'm', tag + 'e']:
+    #     s.add_slide(content=s.content_figures(
+    #         [os.path.join(figpath_ms, txt + '.png')],
+    #         # [os.path.join(figpath_aSPEM, txt + '.png')],
+    #                 title=title, height=s.meta['height']*.825),
+    #        notes="""
+    #
+    #     """)
+
+    tag = 'Results_BCP_sujet'
+    for txt in [str(i) for i in [6, 10, 5, 2]]:
         s.add_slide(content=s.content_figures(
-            [os.path.join(figpath_aSPEM, txt + '.png')],
-                    title=title, height=s.meta['height']*.825),
+            [os.path.join(figpath_aSPEM, tag + '_' + txt + '.png')],
+                    title=title +  ' - fit with BCP', height=s.meta['height']*.825),
            notes="""
 
         """)
 
+    # TODO : average KDE
     tag = 'kde_mean'
     for mode in modes:
         s.add_slide(content=s.content_figures(
-            [os.path.join(figpath_aSPEM, tag + '_' + txt + '_' + mode + '.png') for txt in ['v_a', 'p_bet']],
-                    title=title, height=s.meta['height']*.7, transpose=False, fragment=True),
+            [os.path.join(figpath_ms, tag + '_' + txt + '_' + mode + '.png') for txt in ['v_a', 'p_bet']],
+                    title=title +  ' - fit with BCP', height=s.meta['height']*.7, transpose=False, fragment=True),
            notes="""
 
         """)
