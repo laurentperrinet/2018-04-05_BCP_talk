@@ -622,12 +622,26 @@ URL = "http://arxiv.org/abs/0710.3742"
         s.add_slide(content=s.content_figures([figname],
                     title=title, height=s.meta['height']*.825),
            notes="""
-Let's now see the application of our model to the experimental rotocol that we used in our two experiments
+Let's now see the application of our model to a simple synthetic example before applying it to the experimental protocol that we used in our two experiments
+
 
 - we show two panels, one below which displays the value of the belief for the different run-length, and one above where we will show the resaulting prediction of the next outcome.
+we obtain for any given sequence different values at the given trial in the form of columns for any possible run-length: the belief, 
+and the sufficient statistics for the beta distirbution which allow to provide with an estimate of the current probability
 
 - first, we show the value of probability, low probabilities are blueish while high probabilities. at every trial, the agent evluates the value for the different possible run lengths, generating a column. by showing all columns we generate this image which shows the evaluation along the sequence of trials.
-        """)
+
+- second we show above the sequence of observations that were shown to the agent in a light black line. the read line gives an evaluation of the most probable a posteriori probability as the probability to hte run-length the maximum a posteriori belief on the differettn beliefs about run-lengths. using the estimate of the precision at this 
+
+We remark two main observations: 
+
+- first, beliefs grow at the beginning along a linear ridge, as we begin our model by assuming there was a switch at time 0. Then we observe that at a switch (hidden to the model), the model 
+such that belief is more stronlgly diffused until the probability 
+
+-second, we may use this information to read-out the information the most probable probability and the confidence interval as shown by the red dashed lines (.05, and .95)
+
+as a summary, for any given sequnce, we get an estimate of the probability given by the ideal observer. we will now see how we can apply that to our experiemntal protocol.
+""")
 
     s.close_section()
 
