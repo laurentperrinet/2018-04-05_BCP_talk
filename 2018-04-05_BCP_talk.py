@@ -95,6 +95,7 @@ if not os.path.isfile(figname):
     code = pq.create(meta['url'])
     code.png(figname, scale=5)
 
+    figpath = 'figures'
 
 do_section = [True] * (len(meta['sections']) + 2)
 i_section = 0
@@ -167,17 +168,7 @@ if do_section[i_section]:
 
  """)
 
-    figpath = 'figures'
 
-    figname = os.path.join(figpath_talkbcp, 'qr.png')
-    if not os.path.isfile(figname):
-        # https://pythonhosted.org/PyQRCode/rendering.html
-        # pip3 install pyqrcode
-        # pip3 install pypng
-        import pyqrcode as pq
-
-        code = pq.create(meta['url'])
-        code.png(figname, scale=5)
 
     s.add_slide(content=s.content_figures([figname], cell_bgcolor=meta['bgcolor'], height=s.meta['height']*height_ratio) + '<BR><a href="{url}"> {url} </a>'.format(url= meta['url']),
     notes=" All the material is available online - please flash this QRcode this leads to a page with links to further references and code ")
@@ -344,7 +335,7 @@ Let's now have a look at the raw psychophysical results..
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock_bet.png')],
-            title=title, height=s.meta['height']*.825),
+            title=title, height=s.meta['height']*.825) + url,
     notes="""
 First, we overlay the results of the bet result for one of the 12 subjects
 
@@ -374,7 +365,7 @@ Let's now have a look at EMs...
     for txt in ['raw_trace', 'raw_fitted']: # 'raw_fit',
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, txt + '.png')],
-                title=title + ' - Fitting eye movements', height=s.meta['height']*.825),
+                title=title + ' - Fitting eye movements', height=s.meta['height']*.825) + url,
        notes="""
 
 I show here a typical velocity traces for one subject / 2 trials
@@ -391,7 +382,7 @@ While being sensible to recording errors, this allows us to extract the anticipa
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock_EM.png')],
-            title=title, height=s.meta['height']*.825),
+            title=title, height=s.meta['height']*.825) + url,
     notes="""
 
  * I show here the overlay of this variable on the plot of probability biases
@@ -406,7 +397,7 @@ While being sensible to recording errors, this allows us to extract the anticipa
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock_bet_EM.png')],
-            title=title, height=s.meta['height']*.825),
+            title=title, height=s.meta['height']*.825) + url,
     notes="""
 
 ... to make this clearer, and because we used the same sequence, we can overlay the results of both experiments in one plot:
@@ -418,7 +409,7 @@ which qualitatively confirms such an intuition...
     for txt in ['P_real', 'p_bet--v_a']: # TODO : make a sequence to uncover parts
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_GDR, txt + '.png')],
-                title=title, height=s.meta['height']*.75),
+                title=title, height=s.meta['height']*.75) + url,
        notes="""
  * quantitatively, one can now plot the results for all subjects
 
@@ -501,7 +492,9 @@ URL = "http://arxiv.org/abs/0710.3742"
 
 * adapted from https://github.com/JackKelly/bayesianchangepoint by Jack Kelly (2013) for a binomial input.
 
-* This code is based on the  [MATLAB implementation](http://www.inference.phy.cam.ac.uk/rpa23/changepoint.php) provided by Ryan Adam. available at http://hips.seas.harvard.edu/content/bayesian-online-changepoint-detection
+* This code is based on the  [MATLAB implementation](http://www.inference.phy.cam.ac.uk/rpa23/changepoint.php) provided by Ryan Adam. Was available at http://hips.seas.harvard.edu/content/bayesian-online-changepoint-detection
+
+ * full code @ https://github.com/laurentperrinet/bayesianchangepoint
 
 """, notes='', md=True)
 
@@ -514,15 +507,16 @@ Observe New Datum $x_t$  and   Perform Prediction $P (x_{t+1} | x_{1:t}) =   P (
 ""","""
 Evaluate (likelihood) Predictive Probability $π_{1:t} = P(x_t |ν^{(r)}_t,χ^{(r)}_t)$
 <br>
-Calculate Growth Probabilities $P(r_t=r_{t-1}+1, x_{1:t}) = P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot (1−H(r^{(r)}_{t-1}))$
+Calculate Growth Probabilities $P(r_t=r_{t-1}+1, x_{1:t}) = P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot (1−h))$
 <br>
-<font color="FF0000">Calculate Changepoint Probabilities $P(r_t=0, x_{1:t})= \sum_{r_{t-1}} P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot H(r^{(r)}_{t-1})$
+<font color="FF0000">Calculate Changepoint Probabilities $P(r_t=0, x_{1:t})= \sum_{r_{t-1}} P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot h$
 </font>""","""
 Calculate Evidence $P(x_{1:t}) = \sum_{r_{t-1}} P (r_t, x_{1:t})$
 <br>
 Determine Run Length Distribution $P (r_t | x_{1:t}) = P (r_t, x_{1:t})/P (x_{1:t}) $
 ""","""
 Update Sufficient Statistics :
+<br>
  $ν^{(r+1)}_{t+1} = ν^{(r)}_{t} +1$, $χ^{(r+1)}_{t+1} = χ^{(r)}_{t} + u(x_t)$
 <br>
 <font color="FF0000"> $ν^{(0)}_{t+1} = ν_{prior}$, $χ^{(0)}_{t+1} = χ_{prior}$</font>
@@ -558,7 +552,7 @@ First, we initialize the first node to prior values
     </li>
      <ul>
       <li>
-       $P(r_0)= S(r)$ or $P(r_0=0)=1$ and
+       $P(r_0=0)=1$ and
      </li>
       <li>
        $ν^{(0)}_1 = ν_{prior}$ and $χ^{(0)}_1 = χ_{prior}$
@@ -615,57 +609,38 @@ First, we initialize the first node to prior values
     # * and write notes using markdown
     #
     # """)
+    url =  'full code @ <a href="https://github.com/laurentperrinet/bayesianchangepoint">github.com/laurentperrinet/bayesianchangepoint</a>'
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_talkbcp, 'github.png')],
-            title=title, height=s.meta['height']*.825),
+            title=title, height=s.meta['height']*.825) + url,
     notes="""
 
     """)
 
-
-
-    #
-    # s.add_slide_summary(
-    #         ['Go fullscreen using the f key',
-    #          'You can have an overlook using the o key',
-    #          'Navigate using the arrow keys',
-    #          'see notes using $P(x) = \exp(i)$ the n key'
-    #           'You can have an overlook using the o key',
-    #           'Navigate using the arrow keys',
-    #           'see notes using the n key'],
-    #           title='The Bayesian Changepoint Algorithm', fragment=True,
-    #                       notes="""
-    # * and write notes using markdown
-    #
-    # """)
-
-    s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_talkbcp, 'github.png')],
-            title=title, height=s.meta['height']*.825),
-    notes="""
-
-    """)
-
-    modes = ['max', 'fixed'] # 'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
-    for mode in modes:
+    modes = ['fixed', 'expectation'] # 'max',  'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
+    for mode, mode_txt in zip(['fixed', 'expectation'], [' - Fixed window', ' - Full model']):
 
         figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_' + mode + '.png')
         if not os.path.isfile(figname):
-
+            print('Doing ', figname)
             T = 400
-            mode = 'max'
             p_gen = .25 * np.ones(T)
             p_gen[100:300] = .75
             np.random.seed(2018)
             o = 1 * (p_gen > np.random.rand(T))
 
-            p_bar, r, beliefs = bcp.inference(o, h=1/200, p0=.5)
-            fig, axs = bcp.plot_inference(o, p_gen, p_bar, r, beliefs, max_run_length=250, mode=mode, fig_width=fig_width)
+            p_bar, r_bar, beliefs = bcp.inference(o, h=1/200, p0=.5)
+            # fig, axs = bcp.plot_inference(o, p_gen, p_bar, r_bar, beliefs, max_run_length=250, fixed_window_size=200, mode=mode, fig_width=fig_width)
+
+            if mode == 'fixed':
+                fig, axs = bcp.plot_inference(o, p_gen, p_bar, r_bar, beliefs, max_run_length=250, fixed_window_size=40, mode=mode, fig_width=fig_width)
+            else:
+                fig, axs = bcp.plot_inference(o, p_gen, p_bar, r_bar, beliefs, max_run_length=250, mode=mode, fig_width=fig_width)
             fig.savefig(figname, dpi=400)
 
         s.add_slide(content=s.content_figures([figname],
-                    title=title, height=s.meta['height']*.825),
+                    title=title + mode_txt, height=s.meta['height']*.825) + url,
            notes="""
 Let's now see the application of our model to a simple synthetic example before applying it to the experimental protocol that we used in our two experiments
 
@@ -716,10 +691,11 @@ if do_section[i_section]:
     #
     # """)
 
-    for i_block in range(3):
-        for mode in modes:
+    for mode, mode_txt in zip(['fixed', 'expectation'], [' - Fixed window', ' - Full model']):
+        for i_block in range(3):
             figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_exp_' + mode + '_' + str(i_block) + '.png')
             if not os.path.isfile(figname):
+                print("Doing ", figname)
 
                 seed = 42
                 np.random.seed(seed)
@@ -737,12 +713,16 @@ if do_section[i_section]:
                 print('this experiment uses', N_trials, 'trials and a switch rate of h=', h, '(that is, one switch every', 1/h, 'trials on average)')
                 print('i_block=', i_block)
                 o = p[:, i_block, 0]
-                p_bar, r, beliefs = bcp.inference(o, h=h, p0=.5)
-                fig, axs = bcp.plot_inference(p[:, i_block, 0], p[:, i_block, 1], p_bar, r, beliefs, max_run_length=250, mode=mode, fig_width=fig_width)
+                p_bar, r_bar, beliefs = bcp.inference(o, h=h, p0=.5)
+                if mode == 'fixed':
+                    fig, axs = bcp.plot_inference(p[:, i_block, 0], p[:, i_block, 1], p_bar, r_bar, beliefs, max_run_length=200, fixed_window_size=40, mode=mode, fig_width=fig_width)
+                else:
+                    fig, axs = bcp.plot_inference(p[:, i_block, 0], p[:, i_block, 1], p_bar, r_bar, beliefs, max_run_length=200, mode=mode, fig_width=fig_width)
                 fig.savefig(figname, dpi=400)
 
             s.add_slide(content=s.content_figures([figname],
-                        title=title +  ' - inference with BCP', height=s.meta['height']*.825),
+                        title=title +  mode_txt, #' - inference with BCP',
+                        height=s.meta['height']*.825) + url,
                notes="""
                Let's use our model on the different sequences that were generated in our experiments in the different blocks.
 
@@ -766,8 +746,8 @@ Let's now see how this applies to our experimental results by comparing human ob
     #
     #     """)
 
-    tag = 'Results_BCP_sujet'
-    for txt in [str(i) for i in [6, 10, 5, 2]]:
+    tag = 'Results_BCP'
+    for txt in [str(i) for i in range(2)]:# [6, 10, 5, 2]]:
         s.add_slide(content=s.content_figures(
             [os.path.join(figpath_aSPEM, tag + '_' + txt + '.png')],
                     title=title +  ' - fit with BCP', height=s.meta['height']*.825),
@@ -785,7 +765,7 @@ as a result, the inferred probability as a function of time constitutes a useful
 
     # TODO : average KDE
     tag = 'kde_mean'
-    for mode in modes: #['fixed', 'max', ]: #, 'expectation'
+    for mode in ['fixed', 'expectation']: #, 'max', modes: #
         s.add_slide(content=s.content_figures(
             [os.path.join(figpath_aSPEM, tag + '_' + mode + '.png')],
                     title=title +  ' - fit with BCP', height=s.meta['height']*.7, transpose=False, fragment=True),
