@@ -621,7 +621,7 @@ URL = "http://arxiv.org/abs/0710.3742"
     """)
 
 
-    modes = ['max'] # 'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
+    modes = ['max', 'fixed'] # 'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
     for mode in modes:
 
         figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_' + mode + '.png')
@@ -641,8 +641,32 @@ URL = "http://arxiv.org/abs/0710.3742"
         s.add_slide(content=s.content_figures([figname],
                     title=title, height=s.meta['height']*.825),
            notes="""
+Let's now see the application of our model to a simple synthetic example before applying it to the experimental protocol that we used in our two experiments
 
-        """)
+
+- we show two panels, one below which displays the value of the belief for the different run-length, and one above where we will show the resaulting prediction of the next outcome.
+we obtain for any given sequence different values at the given trial in the form of columns for any possible run-length: the belief, 
+and the sufficient statistics for the beta distirbution which allow to provide with an estimate of the current probability
+
+- first, we show the value of probability, low probabilities are blueish while high probabilities. at every trial, the agent evluates the value for the different possible run lengths, generating a column. by showing all columns we generate this image which shows the evaluation along the sequence of trials.
+
+- second we show above the sequence of observations that were shown to the agent in a light black line. the read line gives an evaluation of the most probable a posteriori probability as the probability to hte run-length the maximum a posteriori belief on the differettn beliefs about run-lengths. using the estimate of the precision at this 
+
+We remark two main observations: 
+
+- first, beliefs grow at the beginning along a linear ridge, as we begin our model by assuming there was a switch at time 0. Then we observe that at a switch (hidden to the model), the model 
+such that belief is more stronlgly diffused until the probability 
+
+-second, we may use this information to read-out the information the most probable probability and the confidence interval as shown by the red dashed lines (.05, and .95)
+
+
+This is in contrast with a fixed length model, for which 
+- the delay will always be similar
+- there is no dynamic upDATE OF THE INFERRD probability
+
+
+as a summary, for any given sequnce, we get an estimate of the probability given by the ideal observer. we will now see how we can apply that to our experiemntal protocol.
+""")
 
     s.close_section()
 
@@ -694,8 +718,18 @@ if do_section[i_section]:
             s.add_slide(content=s.content_figures([figname],
                         title=title +  ' - inference with BCP', height=s.meta['height']*.825),
                notes="""
+               Let's use our model on the different sequences that were generated in our experiments in the different blocks.
+               
+we the same arrangement of panels, we show below the dynamical evolution of beliefs and above the resulting readout from the model 
 
-            """)
+we see that as in the synthetic example above, there is a correct detection of switch after a short delay of a few trials
+
+in particular, from this correct detection, the value of the inferred probability approaches the true one as the number of observations increase in one subblock.
+
+again, we see that a fixed length model gives a similar output but with the two disadvantages described above
+
+Let's now see how this applies to our experimental results by comparing human observers to our bayesian agent.
+""")
     # tag = 'results_bayesianchangepoint_'
     # for txt in [tag + 'm', tag + 'e']:
     #     s.add_slide(content=s.content_figures(
@@ -712,7 +746,15 @@ if do_section[i_section]:
             [os.path.join(figpath_aSPEM, tag + '_' + txt + '.png')],
                     title=title +  ' - fit with BCP', height=s.meta['height']*.825),
            notes="""
+Among our 12 subjects, we show four representative examples. we will use the same figure as in the section with raw results
 
+but we superposed to our 2 variables, the value of the readout inferred probability along with the confidence interval.
+
+compared to the raw results which were using the true (hidden) probability, it seems qualitatively that it follows well the traces observed experimenetally
+- first, both have similar delays in ddetercting a switch, reflecting the diuffusion of probability
+- second, precisions seems to increase in bigger sub-blocks as a function of the inferred run-length 
+
+as a result, the inferred probability as a function of time constitutes a useful regressor 
         """)
 
     # TODO : average KDE
@@ -722,6 +764,21 @@ if do_section[i_section]:
             [os.path.join(figpath_ms, tag + '_' + txt + '_' + mode + '.png') for txt in ['v_a', 'p_bet']],
                     title=title +  ' - fit with BCP', height=s.meta['height']*.7, transpose=False, fragment=True),
            notes="""
+We may finally wrap up results and the model and plot 
+
+scatters plots are visually misleading as they do not show well the density of data points
+
+we therefore used a kernel density estimation which clearly show the relationship between the agent probability and that reported by human observers
+- on the right, we 
+
+to summarize, we have shown that 
+- there is a correlation in the anticiapatory response of eye movements in a volatile environment that is captured if we know the true probability
+- that a fixed length models captures some of this correlation, but that
+- our online bayesian changep[oint model better captures this correlation and that this may hint at the neural mechanisms used to anticipate in a dynamic environment
+
+perspectives:
+- interindividual differences
+- RL
 
         """)
     s.close_section()
