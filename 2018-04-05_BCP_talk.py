@@ -398,7 +398,9 @@ While being sensible to recording errors, this allows us to extract the anticipa
 
  * these accelarations values were here scaled according to their extremal values.
 
- 
+ * there seems to be a trend with the polarity of the accelration being negative for p values below .5 and positive for values above .5
+
+
 
     """)
 
@@ -407,13 +409,30 @@ While being sensible to recording errors, this allows us to extract the anticipa
             title=title, height=s.meta['height']*.825),
     notes="""
 
+... to make this clearer, and because we used the same sequence, we can overlay the results of both experiments in one plot:
+
+which qualitatively confirms such an intuition...
+
     """)
 
-    for txt in ['P_real', 'p_bet--v_a']:
+    for txt in ['P_real', 'p_bet--v_a']: # TODO : make a sequence to uncover parts
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_GDR, txt + '.png')],
                 title=title, height=s.meta['height']*.75),
        notes="""
+ * quantitatively, one can now plot the results for all subjects
+
+ * the x-axis corresponds to the probability that was coded at the second layer and which is unknown to the observer
+ * the y -axis shows either the bet or the
+ * dots represent single responses - the saturation giving the identity of the observer
+
+ we notice a quite nice linear correlation (black line) for both experiments; of the order of that found in the classical experiment with fixed blocks and a vartiety of bias values. This is surprising as the blocks are of random length, observer can still adapt to such a volatile environment.
+
+Another visualization, the scatter plot of acceleration  as a function of probability bet shows also that there is a correlation between both  variables.
+
+This allows to make a first point: it is possible to use more genreal models such as hierarchical generative models.
+
+However, while this results seem encouraging, a more finer analysis may be necessary.
 
     """)
     s.close_section()
@@ -436,7 +455,11 @@ if do_section[i_section]:
     #################################################################################
 
     s.open_section()
-    s.add_slide_outline(i_section-1)
+    s.add_slide_outline(i_section-1, notes="""
+Indeed, these raw psycholophysical results are encouraging but since we used a generative model for generating the sequence, let's see if we can build a Bayesian model which would be optimal wrt to this generative model.
+
+Indeed, such a model already exists, the onlin BCP, and we will adapt it for our specific setting.
+""")
     ############################################################################
     title = meta['sections'][i_section-1]
 
@@ -444,18 +467,41 @@ if do_section[i_section]:
     [os.path.join(figpath_GDR, 'exp.png')],
             title=title, height=s.meta['height']*.825),
     notes="""
+Let's remember our hierarchical generative model.
+
+At any given trial, we wish to construct an algorithm which
+
+We will introduce a fundamental component of Bayesian models : a latent variable
+
+this new variable will be used to test different hypothesis which will be evaluated to predict future states. it is called latent because it aims at representing a variable that is latent (or hidden) to the observer
+
+in our case, we will assume that the bayesian model knows about the structure of the generative model and we will set it to the current run-length $r$, that is, at any given trial, the hypothesis that the past r observations belong to the same block. of course a wrong choice of a latent variables (let's say the temperture in the experimental room) may give unexpected results, even is the bayesian model is "optimal" - an essential point to understand in bayesian inference
 
     """)
 
     tag = 'bcp_model_layer_' #  'model_bcp_'
+    blobs = ["""
+Initialize  $P(r_0)= S(r)$ or $P(r_0=0)=1$ and  $ν^{(0)}_1 = ν_{prior}$ and $χ^{(0)}_1 = χ_{prior}$
+ ""","""
 
-    for txt in [str(i) for i in range(1, 6)]:
+""","""
+
+""","""
+
+"""]
+    for txt, blob, notes_ in zip([str(i) for i in range(1, 5)], blobs, ["""
+
+ ""","""
+
+""","""
+
+""","""
+
+"""]:
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, tag + txt + '.png')],
-                title=title, height=s.meta['height']*.775),
-       notes="""
-
-    """)
+                title=title, height=s.meta['height']*.775)+blob,
+       notes=notes_)
     # https://raw.githubusercontent.com/laurentperrinet/bayesianchangepoint/master/README.md
     for text, md in zip(["""
 <h2>Bayesian Changepoint Detector</h2>
