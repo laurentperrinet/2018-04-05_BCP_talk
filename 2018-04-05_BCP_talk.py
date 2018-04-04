@@ -11,8 +11,9 @@ home = os.environ['HOME']
 figpath_talkbcp = 'figures' # os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
 figpath_GDR = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
 figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/figures')
+figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/figures')
 figpath_ms = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/ms/figures')
-
+figpath_slides = os.path.join(home, 'nextcloud/libs/slides.py/figures/')
 
 import sys
 print(sys.argv)
@@ -97,15 +98,16 @@ if not os.path.isfile(figname):
 do_section = [True] * (len(meta['sections']) + 2)
 i_section = 0
 s = Slides(meta)
-s.meta['Acknowledgements'] = '', #s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), height_px),
+# s.meta['Acknowledgements'] = '', #s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), height_px),
 #
-# s.meta['Acknowledgements'] ="""<h3>Acknowledgements:</h3>
-#    <ul>
-#     <li>Jim Bednar @ Continuum Analytics &amp; University of Edinburgh</li>
-#     <li>Rick Adams and Karl     Friston @ UCL - Wellcome Trust Centre for Neuroimaging</li>
-#     <li>Wahiba Taouali, Giacomo Benvenuti, Frédéric Chavane - ANR BalaV1 </li>
-#     <li>Mina Aliakbari Khoei, Guillaume Masson and Anna Montagnini - FACETS-ITN Marie Curie Training</li>
-#    </ul>
+s.meta['Acknowledgements'] ="""<h3>Acknowledgements:</h3>
+   <ul>
+    <li>Jim Bednar @ Continuum Analytics &amp; University of Edinburgh</li>
+    <li>Berk Mirza, Rick Adams and Karl Friston @ UCL - Wellcome Trust Centre for Neuroimaging</li>
+    <li>Wahiba Taouali, Giacomo Benvenuti, Frédéric Chavane - ANR BalaV1 </li>
+    <li>Jean-Bernard Damasse, Laurent Madelain - ANR REM</li>
+   </ul>
+"""
 #    {Jim}{Karl}{Mina}{Anna}{GSM}<a href="https://github.com/laurentperrinet/slides.py">{Python}</a>
 # """.format(Jim=s.content_imagelet(os.path.join(figpath_aSPEM, 'jim.jpg'), height_px),
 #            Karl=s.content_imagelet(os.path.join(figpath_aSPEM, 'karl.jpg'), height_px),
@@ -113,14 +115,14 @@ s.meta['Acknowledgements'] = '', #s.content_imagelet(os.path.join(figpath_talkbc
 # Anna=s.content_imagelet(os.path.join(figpath_aSPEM, 'anna.jpg'), height_px),
 # GSM=s.content_imagelet(os.path.join(figpath_aSPEM, 'gsm.jpg'), height_px),
 # Python=s.content_imagelet(os.path.join(figpath_aSPEM_, 'python-powered-h-140x182.png'), height_px),
-#            )
+        #    )
 if do_section[i_section]:
     s.open_section()
     #################################################################################
-    ## Intro - 5''
+    ## 🏄🏄🏄🏄🏄🏄🏄🏄 Intro - 5''  🏄🏄🏄🏄🏄🏄🏄🏄
     #################################################################################
     #################################################################################
-    figpath_slides = os.path.join(home, 'nextcloud/libs/slides.py/figures/')
+
     s.hide_slide(content=s.content_figures(
         #[os.path.join(figpath_talkbcp, 'qr.png')], bgcolor="black",
         [os.path.join(figpath_slides, 'mire.png')], bgcolor=meta['bgcolor'],
@@ -157,11 +159,10 @@ if do_section[i_section]:
 
     s.add_slide(content=intro,
             notes="""
-    * (AUTHOR) Hi, I am Laurent Perrinet from (LOGO) the Institute de Neurosciences de la Timone in Marseille, a joint unit from the CNRS and AMU. Using computational models, I am investigating the link between the efficiency of behavioural responses in vision, their underlying neural code and their adaptation to the structure of the world.
+ * (AUTHOR) Hi, I am Laurent Perrinet from (LOGO) the Institute de Neurosciences de la Timone in Marseille, a joint unit from the CNRS and AMU. Using computational models, I am investigating the link between the efficiency of behavioural responses in vision, their underlying neural code and their adaptation to the structure of the world.
 
-    * (SHOW TITLE - THEME) = In particular, I will use today a visual illusion -the FLE- to provide evidence that we use predictive mechanism to compensate for neural delays and perceive the visual world in **real-time** (I will try to define today what I mean by that...)
+ * (SHOW TITLE - THEME) = In particular, I will try to give some principles of active inference, framed in a practical example of a dynamic, poissbly volatile environment and how we may use it to anticipate ---- and my main goal in general is to illustrate how this theory may give a creative and efficient tool to do psychophysics.
 
-    * (ACKNO) this endeavour involves different techniques, tools and... persons. From the head on, I wish to thank the people who collaborated to this project and in particular Rick Adams and Karl Friston and the Wellcome Trust Centre for Neuroimaging for providing the tools for a successful visit / but also Mina, Guillaume and Anna for the great oppportunity to link  theories with psychophysical data; Wahiba, Giacomo and Frédéric for the challenging task of linking such models to the neural activity in NHP, and finally Jean-Bernard, Sohir and Laurent Madelain for their essential knowledge in adaptation and reinforcement.
 
 
  """)
@@ -179,13 +180,12 @@ if do_section[i_section]:
         code.png(figname, scale=5)
 
     s.add_slide(content=s.content_figures([figname], cell_bgcolor=meta['bgcolor'], height=s.meta['height']*height_ratio) + '<BR><a href="{url}"> {url} </a>'.format(url= meta['url']),
-    notes=""" All the material is available online - please flash this QRcode this leads to a page with """)
+    notes=" All the material is available online - please flash this QRcode this leads to a page with links to further references and code ")
+
     s.add_slide(content=intro,
         notes="""
 
-* (SHOW TITLE) of interest for biologists to understand what the neural activity (or behavior) they record relates to something relevant (a function, a particular object)
-
-* here, I will try to introduce you to the concept that Probabilities and Bayesian inference can offer a language to alleviate this question
+* (ACKNO) this endeavour involves different techniques, tools and... persons. From the head on, I wish to acknowledezg Chloe and Anna for doing most of this work +  thank the people who collaborated directly or indeirectly to this project and in particular Berk Mirza, Rick Adams and Karl Friston and the Wellcome Trust Centre for Neuroimaging for providing the tools for a successful visit and finally Jean-Bernard and Laurent Madelain for their essential knowledge in adaptation and reinforcement.
 
 """)
 
@@ -194,18 +194,32 @@ if do_section[i_section]:
 figpath_GDR = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/2017-11-24_Poster_GDR_Robotique/figures')
 figpath_aSPEM = os.path.join(home, 'pool/ANR-REM/ASPEM_REWARD/AnticipatorySPEM/figures')
 
-
-######################## MOTIVATION #################################
 i_section += 1
 if do_section[i_section]:
+    #################################################################################
+    ## 🏄🏄🏄🏄🏄🏄🏄🏄 MOTIVATION - 10''  🏄🏄🏄🏄🏄🏄🏄🏄
+    #################################################################################
+    #################################################################################
+
     s.open_section()
     title = meta['sections'][i_section-1]
     s.add_slide_outline(i_section-1)
 
-    s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_aSPEM, 'protocol_recording.png')],
-            title=title + ' - a Real-life example', height=s.meta['height']*.825*.001), # HACK
+    for txt in ['fixed', 'hinsight']:
+
+        s.add_slide(content=s.content_figures(
+        [os.path.join(figpath_aSPEM, 'trump_' + txt + '.png')],
+                title=title + ' - a Real-life example', height=s.meta['height']*.825*.001), # HACK
     notes="""
+ * We live in a fundamentally volatile world - Think for instance to the evolution  of prices on the stock market: Any Socio-economic contextual index may make the price evolve up or down, slowly or more Rapidly ...
+
+ * Take for instance this very common source of information of the text of all tweets by Donald Trump In a last few years. It's just a Cheap Way Of accessing Big data if you'd prefer - If now I crossed time we extract other tweetsWhich contained onto not containA list of words that please selected
+
+ * When plottingThe occurrence of this words As a function of time smoothed in a small Time window We may guess that there is some tendenciesWhichHappen toBelong to different blocks
+
+ * On way to think about The way These words are used is that This words appear with different a priori probabilities In time And  that the context that drives this probabitlities Is changing In different blocks Which is corresponds to different contexts: a pre-election phase,
+
+* This may look like this boxes That a plot here as a function of time. Such a representation allows to anticipate = infer for future outcomes but more importantly to better understand The motives behind the context and use of these words (if any)
 
     """)
 
@@ -213,7 +227,11 @@ if do_section[i_section]:
     [os.path.join(figpath_aSPEM, 'protocol_recording.png')],
             title=title + ' - Eye Movements', height=s.meta['height']*.825),
     notes="""
+ * This was shown to happen in the more  experimental setting While recording smooth pursuit eye movements : Anna Montagnini has previously shown that if you use a probabilistic bias in the direction of the movement of the target, the the eye will (uncousciously) anticipate in the direction of this bias.
 
+ * this protocol used a random length fixation period then a pause of fixed duration, and then a traget moving at 15 deg / s
+
+ * the value p gives the probability of going to the right : at .5 it is unbisaed, and at .75 for instance it goes 75% to the right and 25% to the left
     """)
 
     for txt in ['1', '2']:
@@ -222,14 +240,24 @@ if do_section[i_section]:
                 title=title + ' - Eye Movements', height=s.meta['height']*.825),
        notes="""
 
+ * we show in this plot the velocity of the eye that she recorded when tracking the target.
+
+ * we observe that as you depart from .5, there is an anticipatory component to the SPEM
+
+ * Moreover, she has proved that this behaviour is progressive and increases with the value of p
+
     """)
 
-    for tag in ['Experiment_classique_', 'Experiment_randomblock_']:
+    for tag in ['Experiment_randomblock_', 'Experiment_classique_', 'Experiment_randomblock_']:
         for txt in [str(i) for i in range(4)]:
             s.add_slide(content=s.content_figures(
         [os.path.join(figpath_aSPEM, tag + txt + '.png')],
                     title=title + ' - Eye Movements', height=s.meta['height']*.775),
            notes="""
+ * our initial goal was to extend these results to a more volatile environment. This Is well described by a three layered architecture decribing the evolution of outcomes (left or right) as a function of the trial number in an experimental block:
+
+ - at the bottom we have switches, that is moments 
+
 
         """)
 
@@ -251,6 +279,11 @@ if do_section[i_section]:
 
 i_section += 1
 if do_section[i_section]:
+    #################################################################################
+    ## 🏄🏄🏄🏄🏄🏄🏄🏄 RAW RESULTS - 10''  🏄🏄🏄🏄🏄🏄🏄🏄
+    #################################################################################
+    #################################################################################
+
     s.open_section()
     ############################################################################
     title = meta['sections'][i_section-1]
@@ -282,9 +315,9 @@ if do_section[i_section]:
     # """)
 
 
-    for txt in ['Fit_vitesse', 'Fonction_Fit']:
+    for txt in ['raw_trace', 'raw_fitted']: # 'raw_fit',
         s.add_slide(content=s.content_figures(
-    [os.path.join(figpath_ms, txt + '.png')],
+    [os.path.join(figpath_aSPEM, txt + '.png')],
                 title=title + ' - Fitting eye movements', height=s.meta['height']*.825),
        notes="""
 
@@ -325,6 +358,11 @@ fig_width = 12
 
 i_section += 1
 if do_section[i_section]:
+    #################################################################################
+    ## 🏄🏄🏄🏄🏄🏄🏄🏄 MODEL - 10''  🏄🏄🏄🏄🏄🏄🏄🏄
+    #################################################################################
+    #################################################################################
+
     s.open_section()
     s.add_slide_outline(i_section-1)
     ############################################################################
@@ -473,6 +511,11 @@ URL = "http://arxiv.org/abs/0710.3742"
 
 i_section += 1
 if do_section[i_section]:
+    #################################################################################
+    ## 🏄🏄🏄🏄🏄🏄🏄🏄 RESULTS - 5''  🏄🏄🏄🏄🏄🏄🏄🏄
+    #################################################################################
+    #################################################################################
+
     s.open_section()
     s.add_slide_outline(i_section-1)
     ############################################################################
@@ -548,6 +591,11 @@ if do_section[i_section]:
 
 
 if do_section[i_section]:
+    #################################################################################
+    ## 🏄🏄🏄🏄🏄🏄🏄🏄 OUTRO - 5''  🏄🏄🏄🏄🏄🏄🏄🏄
+    #################################################################################
+    #################################################################################
+
     s.open_section()
     s.add_slide(content=intro,
         notes="""
@@ -576,6 +624,13 @@ if slides_filename is None:
  Quand:: {DD}/{MM}/{YYYY}
  Où:: {location}
  Support visuel:: http://blog.invibe.net/files/{tag}.html
+
+
+ What:: talk @ the [[{conference_url}|{conference}]]
+ Who:: {author}
+ When:: {DD}/{MM}/{YYYY}
+ Where:: {location}
+ Slides:: http://blog.invibe.net/files/{tag}.html
 
 == reference ==
 {{{{{{
