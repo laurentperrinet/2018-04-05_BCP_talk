@@ -59,7 +59,8 @@ meta = dict(
  author_link='<a href="http://invibe.net">Laurent Perrinet</a>, Chloé Pasturel and Anna Montagnini',
    short_title='Principles and psychophysics of Active Inference',
  # title='Principles and psychophysics of Active Inference: Anticipating a dynamic, switching probabilistic bias in visual motion direction',
- title='Principles and psychophysics of Active Inference in anticipating a dynamic, switching probabilistic bias',
+ #title='Principles and psychophysics of Active Inference in anticipating a dynamic, switching probabilistic bias',
+ title='Principles and psychophysics of Active Inference in anticipating a dynamic probabilistic bias',
  conference_url='https://opt-infer-brain.sciencesconf.org/',
  short_conference='Bayesian WS, Marseille - April 5th, 2018',
  conference='Probabilities and Optimal Inference to Understand the Brain',
@@ -100,7 +101,7 @@ i_section = 0
 s = Slides(meta)
 # s.meta['Acknowledgements'] = '', #s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), height_px),
 #
-s.meta['Acknowledgements'] ="""<h3>Acknowledgements:</h3>
+s.meta['Acknowledgements'] ="""<h4>Acknowledgements:</h4>
    <ul>
     <li>Jim Bednar @ Continuum Analytics &amp; University of Edinburgh</li>
     <li>Berk Mirza, Rick Adams and Karl Friston @ UCL - Wellcome Trust Centre for Neuroimaging</li>
@@ -150,11 +151,12 @@ if do_section[i_section]:
     # [os.path.join(figpath_aSPEM, "troislogos.png")], bgcolor="black",
     # height=s.meta['height']*.2, width=s.meta['height']*.75)
     intro += s.content_imagelet(os.path.join(figpath_slides, "troislogos.png"), s.meta['height']*.2) #bgcolor="black",
-    intro += s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), s.meta['height']*.2) #bgcolor="black",
+    #intro += s.content_imagelet(os.path.join(figpath_talkbcp, 'qr.png'), s.meta['height']*.2) #bgcolor="black",
     # height=s.meta['height']*.2, width=s.meta['height']*.2)
-    # {Acknowledgements}
+    #
     intro += """
-    <h4><a href="{conference_url}">{conference}</a></h4>
+    <h4><a href="{conference_url}">{conference}</a>, {DD}/{MM}/{YYYY} </h4>
+    {Acknowledgements}
     """.format(**meta)
 
     s.add_slide(content=intro,
@@ -162,8 +164,6 @@ if do_section[i_section]:
  * (AUTHOR) Hi, I am Laurent Perrinet from (LOGO) the Institute de Neurosciences de la Timone in Marseille, a joint unit from the CNRS and AMU. Using computational models, I am investigating the link between the efficiency of behavioural responses in vision, their underlying neural code and their adaptation to the structure of the world.
 
  * (SHOW TITLE - THEME) = In particular, I will try to give some principles of active inference, framed in a practical example of a dynamic, poissbly volatile environment and how we may use it to anticipate ---- and my main goal in general is to illustrate how this theory may give a creative and efficient tool to do psychophysics.
-
-
 
  """)
 
@@ -184,8 +184,7 @@ if do_section[i_section]:
 
     s.add_slide(content=intro,
         notes="""
-
-* (ACKNO) this endeavour involves different techniques, tools and... persons. From the head on, I wish to acknowledezg Chloe and Anna for doing most of this work +  thank the people who collaborated directly or indeirectly to this project and in particular Berk Mirza, Rick Adams and Karl Friston and the Wellcome Trust Centre for Neuroimaging for providing the tools for a successful visit and finally Jean-Bernard and Laurent Madelain for their essential knowledge in adaptation and reinforcement.
+ * (ACKNO) this endeavour involves different techniques, tools and... persons. From the head on, I wish to acknowledezg Chloe and Anna for doing most of this work +  thank the people who collaborated directly or indeirectly to this project and in particular Berk Mirza, Rick Adams and Karl Friston and the Wellcome Trust Centre for Neuroimaging for providing the tools for a successful visit and finally Jean-Bernard and Laurent Madelain for their essential knowledge in adaptation and reinforcement.
 
 """)
 
@@ -203,29 +202,33 @@ if do_section[i_section]:
 
     s.open_section()
     title = meta['sections'][i_section-1]
-    s.add_slide_outline(i_section-1)
+    s.add_slide_outline(i_section-1, notes="""
+ * Let's me first describe the motivation of this work...
 
-    for txt in ['fixed', 'hinsight']:
-
-        s.add_slide(content=s.content_figures(
-        [os.path.join(figpath_aSPEM, 'trump_' + txt + '.png')],
-                title=title + ' - a Real-life example', height=s.meta['height']*.825*.001), # HACK
-    notes="""
  * We live in a fundamentally volatile world - Think for instance to the evolution  of prices on the stock market: Any Socio-economic contextual index may make the price evolve up or down, slowly or more Rapidly ...
 
  * Take for instance this very common source of information of the text of all tweets by Donald Trump In a last few years. It's just a Cheap Way Of accessing Big data if you'd prefer - If now I crossed time we extract other tweetsWhich contained onto not containA list of words that please selected
 
- * When plottingThe occurrence of this words As a function of time smoothed in a small Time window We may guess that there is some tendenciesWhichHappen toBelong to different blocks
+    """)
+
+    for txt in ['fixed', 'hindsight']:
+        s.add_slide(content=s.content_figures(
+        [os.path.join(figpath_aSPEM, 'trump_' + txt + '.png')],
+                title=title + ' - a Real-life example', height=s.meta['height']*.825),
+    notes="""
+
+ * When plotting The occurrence of theses words As a function of time smoothed in a small Time window We may guess that there is some tendenciesWhichHappen toBelong to different blocks
 
  * On way to think about The way These words are used is that This words appear with different a priori probabilities In time And  that the context that drives this probabitlities Is changing In different blocks Which is corresponds to different contexts: a pre-election phase,
 
 * This may look like this boxes That a plot here as a function of time. Such a representation allows to anticipate = infer for future outcomes but more importantly to better understand The motives behind the context and use of these words (if any)
 
     """)
+    bib =  'Montagnini A, Souto D, and Masson GS (2010) <a href="http://jov.arvojournals.org/article.aspx?articleid=2138664">J Vis (VSS Abstracts) 10(7):554</a>,<BR> Montagnini A, Perrinet L, and Masson GS (2015) <a href="https://arxiv.org/abs/1611.07831">BICV book chapter</a>'
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'protocol_recording.png')],
-            title=title + ' - Eye Movements', height=s.meta['height']*.825),
+            title=title + ' - Eye Movements', height=s.meta['height']*.825) + bib,
     notes="""
  * This was shown to happen in the more  experimental setting While recording smooth pursuit eye movements : Anna Montagnini has previously shown that if you use a probabilistic bias in the direction of the movement of the target, the the eye will (uncousciously) anticipate in the direction of this bias.
 
@@ -248,27 +251,30 @@ if do_section[i_section]:
 
     """)
 
-    for tag in ['Experiment_randomblock_', 'Experiment_classique_', 'Experiment_randomblock_']:
-        for txt in [str(i) for i in range(4)]:
+    for tag, notes_ in zip(['Experiment_randomblock_', 'Experiment_classique_', 'Experiment_randomblock_'], ["""
+* our initial goal was to extend these results to a more volatile environment. This Is well described by a three layered architecture decribing the evolution of outcomes (left or right) as a function of the trial number in an experimental block:
+
+- at the bottom we have switches, that is moments were we know that there was a change in context:
+
+- then we have an intermediate layer which describes this context as the probability p which defines the bias towards one direction. as switches happen at random times but with a given hazard rate, blocks are of average length of here 40.
+
+- finally, we draw the directions as a sequences of binary events following this bernouilli trials
+
+ If we draw another exmple of this generative model
+""","""
+
+This has to be put in contrast with a more classical protocol such as that used in the previously described experiment where different blocks of fixed length were drawn, but with different probabilities.
+
+""","""
+
+Here, we
+
+ """]):
+        for txt in [str(i) for i in range(4)[::-1]]:
             s.add_slide(content=s.content_figures(
         [os.path.join(figpath_aSPEM, tag + txt + '.png')],
                     title=title + ' - Eye Movements', height=s.meta['height']*.775),
-           notes="""
- * our initial goal was to extend these results to a more volatile environment. This Is well described by a three layered architecture decribing the evolution of outcomes (left or right) as a function of the trial number in an experimental block:
-
- - at the bottom we have switches, that is moments were we know that there was a change in context:
-
- - then we have an intermediate layer which describes this context as the probability p which defines the bias towards one direction. as switches happen at random times but with a given hazard rate, blocks are of average length of here 40.
-
- - finally, we draw the directions as a sequences of binary events following this bernouilli trials
-
-If we draw another exmple of this generative model
-
-This has to be put in contradt with a more classical protocol such as that used in the previously described experiment where different blocks of fixed length were drawn, but with different probabilities.
-
-Here,
-
-        """)
+           notes=notes_)
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock.png')],
@@ -293,7 +299,7 @@ We anticipated that such an  experiment for which we simply recordedd the eye mo
             title=title + ' - Random-length block design', height=s.meta['height']*.825),
     notes="""
 
-This is why we added a supplementary experiment for each observer but on a different day for which we asked at every trial to give a subjective, conscious evaluation of the direction of the next trial + a confidence about this inference.
+This is why we added a supplementary experiment for each observer but on a different day for which we asked at every trial to give a subjective, conscious evaluation of the direction of the next trial + a confidence about this inference. Once this information given by the subject, we were showing the actual outcome.
 
 Interestingly, we used exactly the same sequence, allowing to make a direc comparison of the results of both experiments
 
@@ -314,16 +320,24 @@ if do_section[i_section]:
     s.open_section()
     ############################################################################
     title = meta['sections'][i_section-1]
-    s.add_slide_outline(i_section-1)
+    s.add_slide_outline(i_section-1, notes="")
 
-    url =  'full code @ <a href="https://github.com/chloepasturel/AnticipatorySPEM">github.com/chloepasturel/AnticipatorySPEM</a>)'
+    url =  'full code @ <a href="https://github.com/chloepasturel/AnticipatorySPEM">github.com/chloepasturel/AnticipatorySPEM</a>'
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock.png')],
             title=title + ' - Random-length block design', height=s.meta['height']*.825) + url,
     notes="""
 
+ * the whole experiment was coded by Chloé using :
+ - python for the generative model,
+ - the psychopy library for the stimulus display + connection to the eyelink 1000 that we used to record EMs
+ - numpy, pandas and pylab for the data analysis
 
+  * all this code is available : for running the experiments, re-analyzing the data and doing all plots are on github
+
+
+Let's now have a look at the raw psychophysical results..
 
     """)
 
@@ -332,6 +346,18 @@ if do_section[i_section]:
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock_bet.png')],
             title=title, height=s.meta['height']*.825),
     notes="""
+First, we overlay the results of the bet result for one of the 12 subjects
+
+We rescaled th value given by the observer so that it fits to 0 (sure it goes left) to 1 (sure it goes right)
+
+We observe a pretty good fit of this trace as a function of trial number
+
+
+In particular, we see 2 main effects:
+- results are more variable when the bias is around .5 than when it is high (close to zero or one)
+- switches were detected quite rapidly but with a certain delay of a few trials. Indeed, note that this plot shows the entire sequence but that observers had only access to some internal representation of the memory of the previous observations. When faced with some new observations, the observer has to constantly adapt his response to either exploit this information by considering that this observation belongs to the same sub-block or to explore a novel hypothesis. This compromise is one of the crucial component that we wish to explore.
+
+Let's now have a look at EMs...
 
     """)
 
@@ -351,12 +377,28 @@ if do_section[i_section]:
                 title=title + ' - Fitting eye movements', height=s.meta['height']*.825),
        notes="""
 
+I show here a typical velocity traces for one subject / 2 trials
+
+- x-axis is time in milliseconds aligned on target onset, and we show respectively from left to right the fixation in gray, the GAP in pink (300ms) and the run in light gray.
+
+- y-axis is the velocity as computed as the gradient of position. Remark that the eyelink provides with the periods of saccades or blinks that we removed from the signal. it is quite noisy and to complement existing signal processing methods, Chloe implemented a robust
+
+- fitting method which allows to extract some key components of the velocity traces: maximum speed, latency, temporal inertia ($\tau$) and most interestingly acceleration before motion onset. We cross-validated that this method was givinfg similar results to other classical methods but in a more robust fashion/
+
+While being sensible to recording errors, this allows us to extract the anticipatory component of SPEMs and..
+
     """)
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock_EM.png')],
             title=title, height=s.meta['height']*.825),
     notes="""
+
+ * I show here the overlay of this variable on the plot of probability biases
+
+ * these accelarations values were here scaled according to their extremal values.
+
+ 
 
     """)
 
