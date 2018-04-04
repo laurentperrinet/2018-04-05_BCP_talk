@@ -481,23 +481,42 @@ in our case, we will assume that the bayesian model knows about the structure of
 
     tag = 'bcp_model_layer_' #  'model_bcp_'
     blobs = ["""
-Initialize  $P(r_0)= S(r)$ or $P(r_0=0)=1$ and  $ν^{(0)}_1 = ν_{prior}$ and $χ^{(0)}_1 = χ_{prior}$
+Initialize $P(r_0=0)=1$ and  $ν^{(0)}_1 = ν_{prior}$ and $χ^{(0)}_1 = χ_{prior}$
  ""","""
-
+Observe New Datum $x_t$  and   Perform Prediction $P (x_{t+1} | x_{1:t}) =   P (x_{t+1}|x_{1:t} , r_t) \cdot P (r_t|x_{1:t})$
+<br<a href="http://arxiv.org/abs/0710.3742"Adams &amp; MacKay 2007 "Bayesian Online Changepoint Detection</a>
 ""","""
-
+Evaluate (likelihood) Predictive Probability $π_{1:t} = P(x_t |ν^{(r)}_t,χ^{(r)}_t)$
+<br>
+Calculate Growth Probabilities $P(r_t=r_{t-1}+1, x_{1:t}) = P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot (1−H(r^{(r)}_{t-1}))$
+<br>
+<font color="FF0000">Calculate Changepoint Probabilities $P(r_t=0, x_{1:t})= \sum_{r_{t-1}} P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot H(r^{(r)}_{t-1})$
+</font>""","""
+Calculate Evidence $P(x_{1:t}) = \sum_{r_{t-1}} P (r_t, x_{1:t})$
+<br>
+Determine Run Length Distribution $P (r_t | x_{1:t}) = P (r_t, x_{1:t})/P (x_{1:t}) $
 ""","""
+Update Sufficient Statistics :
+ $ν^{(r+1)}_{t+1} = ν^{(r)}_{t} +1$, $χ^{(r+1)}_{t+1} = χ^{(r)}_{t} + u(x_t)$
+<br>
+<font color="FF0000"> $ν^{(0)}_{t+1} = ν_{prior}$, $χ^{(0)}_{t+1} = χ_{prior}$</font>
 
 """]
-    for txt, blob, notes_ in zip([str(i) for i in range(1, 5)], blobs, ["""
+    for txt, blob, notes_ in zip([str(i) for i in range(5)], blobs, ["""
+* in this graph information will be represented at different nodes. each node represent a belief which takes the form of a probability distribution over the set of parameters that we wish to describe.
+* it can be the mean and variance of a gaussain, but in general it will be 2 parameters. in our case, we wish to estimate p (between zero and one) - it is characterized by the beta distribution (mathematically it is the conjugate of the bernouilli distribution)
+* (mathematically, we will use th family of exponenetial distributions:, gaussians, binomials) among which the beta distribution belongs
+First, we initialize the first node to prior values
+* at trial zero, there is no information
+""","""
 
- ""","""
+""","""
 
 ""","""
 
 ""","""
 
-"""]:
+"""]):
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, tag + txt + '.png')],
                 title=title, height=s.meta['height']*.775)+blob,
@@ -521,13 +540,13 @@ Initialize  $P(r_0)= S(r)$ or $P(r_0=0)=1$ and  $ν^{(0)}_1 = ν_{prior}$ and $�
  Observe New Datum $x_t$
 </li>
  <li>
-  Evaluate Predictive Probability $π_{1:t} = P(x |ν^{(r)}_t,χ^{(r)}_t)$
+  Evaluate Predictive Probability $π_{1:t} = P(x_t |ν^{(r)}_t,χ^{(r)}_t)$
 </li>
  <li>
-  Calculate Growth Probabilities $P(r_t=r_{t-1}+1, x_{1:t}) = P(r_{t-1}, x_{1:t-1}) π^{(r)}_t (1−H(r^{(r)}_{t-1}))$
+  Calculate Growth Probabilities $P(r_t=r_{t-1}+1, x_{1:t}) = P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot (1−H(r^{(r)}_{t-1}))$
 </li>
  <li>
-  Calculate Changepoint Probabilities $P(r_t=0, x_{1:t})= \sum_{r_{t-1}} P(r_{t-1}, x_{1:t-1}) π^{(r)}_t H(r^{(r)}_{t-1})$
+  Calculate Changepoint Probabilities $P(r_t=0, x_{1:t})= \sum_{r_{t-1}} P(r_{t-1}, x_{1:t-1}) \cdot π^{(r)}_t \cdot H(r^{(r)}_{t-1})$
 </li>
  <li>
   Calculate Evidence $P(x_{1:t}) = \sum_{r_{t-1}} P (r_t, x_{1:t})$
@@ -547,7 +566,7 @@ Initialize  $P(r_0)= S(r)$ or $P(r_0=0)=1$ and  $ν^{(0)}_1 = ν_{prior}$ and $�
  </li>
   </ul>
  <li>
-  Perform Prediction $P (x_{t+1} | x_{1:t}) =   P (x_{t+1}|x_{1:t} , r_t) P (r_t|x_{1:t})$
+  Perform Prediction $P (x_{t+1} | x_{1:t}) =   P (x_{t+1}|x_{1:t} , r_t) \cdot P (r_t|x_{1:t})$
 </li>
  <li>
   go to (2)
