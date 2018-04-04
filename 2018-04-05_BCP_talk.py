@@ -622,7 +622,11 @@ URL = "http://arxiv.org/abs/0710.3742"
         s.add_slide(content=s.content_figures([figname],
                     title=title, height=s.meta['height']*.825),
            notes="""
+Let's now see the application of our model to the experimental rotocol that we used in our two experiments
 
+- we show two panels, one below which displays the value of the belief for the different run-length, and one above where we will show the resaulting prediction of the next outcome.
+
+- first, we show the value of probability, low probabilities are blueish while high probabilities. at every trial, the agent evluates the value for the different possible run lengths, generating a column. by showing all columns we generate this image which shows the evaluation along the sequence of trials.
         """)
 
     s.close_section()
