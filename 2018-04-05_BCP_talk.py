@@ -283,7 +283,7 @@ In summary, the design of our experimental setting is therefore very similar to 
 
 - with an average block length of 40 trials
 
-We anticipated that such an  experiment should be more difficult for observers compared to longer, fixed blocks and...
+We anticipated that such an  experiment for which we simply recordedd the eye movements should be more difficult for observers compared to the classical experiments with longer (400 trials), fixed blocks and...
 
 
     """)
@@ -293,7 +293,12 @@ We anticipated that such an  experiment should be more difficult for observers c
             title=title + ' - Random-length block design', height=s.meta['height']*.825),
     notes="""
 
-This is why
+This is why we added a supplementary experiment for each observer but on a different day for which we asked at every trial to give a subjective, conscious evaluation of the direction of the next trial + a confidence about this inference.
+
+Interestingly, we used exactly the same sequence, allowing to make a direc comparison of the results of both experiments
+
+We called this experiment the bet experiment.
+
 
     """)
     s.close_section()
@@ -311,11 +316,14 @@ if do_section[i_section]:
     title = meta['sections'][i_section-1]
     s.add_slide_outline(i_section-1)
 
+    url =  'full code @ <a href="https://github.com/chloepasturel/AnticipatorySPEM">github.com/chloepasturel/AnticipatorySPEM</a>)'
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'Experiment_randomblock.png')],
-            title=title + ' - Random-length block design', height=s.meta['height']*.825),
+            title=title + ' - Random-length block design', height=s.meta['height']*.825) + url,
     notes="""
+
+
 
     """)
 
