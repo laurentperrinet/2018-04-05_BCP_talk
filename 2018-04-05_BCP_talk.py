@@ -104,9 +104,7 @@ s = Slides(meta)
 #
 s.meta['Acknowledgements'] ="""<h4>Acknowledgements:</h4>
    <ul>
-    <li>Jim Bednar @ Continuum Analytics &amp; University of Edinburgh</li>
     <li>Berk Mirza, Rick Adams and Karl Friston @ UCL - Wellcome Trust Centre for Neuroimaging</li>
-    <li>Wahiba Taouali, Giacomo Benvenuti, Frédéric Chavane - ANR BalaV1 </li>
     <li>Jean-Bernard Damasse, Laurent Madelain - ANR REM</li>
    </ul>
 """
@@ -201,20 +199,21 @@ if do_section[i_section]:
  * Take for instance this very common source of information of the text of all tweets by Donald Trump In a last few years. It's just a Cheap Way Of accessing Big data if you'd prefer - If now I crossed time we extract other tweetsWhich contained onto not containA list of words that please selected
 
     """)
-
-    for txt in ['fixed', 'hindsight']:
-        s.add_slide(content=s.content_figures(
-        [os.path.join(figpath_aSPEM, 'trump_' + txt + '.png')],
-                title=title + ' - a Real-life example', height=s.meta['height']*.825),
-    notes="""
-
- * When plotting The occurrence of theses words As a function of time smoothed in a small Time window We may guess that there is some tendenciesWhichHappen toBelong to different blocks
-
- * On way to think about The way These words are used is that This words appear with different a priori probabilities In time And  that the context that drives this probabitlities Is changing In different blocks Which is corresponds to different contexts: a pre-election phase,
-
-* This may look like this boxes That a plot here as a function of time. Such a representation allows to anticipate = infer for future outcomes but more importantly to better understand The motives behind the context and use of these words (if any)
-
-    """)
+#
+#     for txt in ['fixed', 'hindsight']:
+#         s.add_slide(content=s.content_figures(
+#         [os.path.join(figpath_aSPEM, 'trump_' + txt + '.png')],
+#                 title=title + ' - a Real-life example', height=s.meta['height']*.825),
+#     notes="""
+#
+#  * When plotting The occurrence of theses words As a function of time smoothed in a small Time window We may guess that there is some tendenciesWhichHappen toBelong to different blocks
+#
+#  * On way to think about The way These words are used is that This words appear with different a priori probabilities In time And  that the context that drives this probabitlities Is changing In different blocks Which is corresponds to different contexts: a pre-election phase,
+#
+# * This may look like this boxes That a plot here as a function of time. Such a representation allows to anticipate = infer for future outcomes but more importantly to better understand The motives behind the context and use of these words (if any)
+#
+#     """)
+#
     bib =  'Montagnini A, Souto D, and Masson GS (2010) <a href="http://jov.arvojournals.org/article.aspx?articleid=2138664">J Vis (VSS Abstracts) 10(7):554</a>,<BR> Montagnini A, Perrinet L, and Masson GS (2015) <a href="https://arxiv.org/abs/1611.07831">BICV book chapter</a>'
 
     s.add_slide(content=s.content_figures(
@@ -763,17 +762,27 @@ compared to the raw results which were using the true (hidden) probability, it s
 as a result, the inferred probability as a function of time constitutes a useful regressor
         """)
 
-    # TODO : average KDE
-    tag = 'kde_mean'
-    for mode in ['fixed', 'expectation']: #, 'max', modes: #
+    for txt in ['P_real', 'p_bet--v_a']: # TODO : make a sequence to uncover parts
         s.add_slide(content=s.content_figures(
-            [os.path.join(figpath_aSPEM, tag + '_' + mode + '.png')],
-                    title=title +  ' - fit with BCP', height=s.meta['height']*.7, transpose=False, fragment=True),
-           notes="""
+    [os.path.join(figpath_GDR, txt + '.png')],
+                title=title, height=s.meta['height']*.75) + url,
+       notes="""
+
 We may finally wrap up results and the model and plot
 
 scatters plots are visually misleading as they do not show well the density of data points
 
+
+
+    """)
+    # TODO : average KDE
+    tag = 'kde_mean'
+    for mode, mode_txt in zip(['fixed', 'expectation'], [' - Fixed window', ' - Full model']):
+    # for mode in ['fixed', 'expectation']: #, 'max', modes: #
+        s.add_slide(content=s.content_figures(
+            [os.path.join(figpath_aSPEM, tag + '_' + mode + '.png')],
+                    title=title + mode_txt, height=s.meta['height']*.7, transpose=False, fragment=True),
+           notes="""
 we therefore used a kernel density estimation which clearly show the relationship between the agent probability and that reported by human observers
 - on the right, we
 
