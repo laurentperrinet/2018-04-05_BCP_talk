@@ -24,5 +24,5 @@ blog: html
 
 
 github:
-	git commit -am' compiling using make'
+	git commit -am' adding notes'
 	git push

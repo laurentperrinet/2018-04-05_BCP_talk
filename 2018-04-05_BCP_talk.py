@@ -256,8 +256,17 @@ if do_section[i_section]:
            notes="""
  * our initial goal was to extend these results to a more volatile environment. This Is well described by a three layered architecture decribing the evolution of outcomes (left or right) as a function of the trial number in an experimental block:
 
- - at the bottom we have switches, that is moments 
+ - at the bottom we have switches, that is moments were we know that there was a change in context:
 
+ - then we have an intermediate layer which describes this context as the probability p which defines the bias towards one direction. as switches happen at random times but with a given hazard rate, blocks are of average length of here 40.
+
+ - finally, we draw the directions as a sequences of binary events following this bernouilli trials
+
+If we draw another exmple of this generative model
+
+This has to be put in contradt with a more classical protocol such as that used in the previously described experiment where different blocks of fixed length were drawn, but with different probabilities.
+
+Here,
 
         """)
 
@@ -266,12 +275,25 @@ if do_section[i_section]:
             title=title + ' - Random-length block design', height=s.meta['height']*.825),
     notes="""
 
+In summary, the design of our experimental setting is therefore very similar to the previous experiment but with a more general construct:
+
+- using the same 3-layered generative model, we generated sequences of directions
+
+- and generated 3 blocks of 200 trials
+
+- with an average block length of 40 trials
+
+We anticipated that such an  experiment should be more difficult for observers compared to longer, fixed blocks and...
+
+
     """)
 
     s.add_slide(content=s.content_figures(
     [os.path.join(figpath_aSPEM, 'protocol_bet.png')],
             title=title + ' - Random-length block design', height=s.meta['height']*.825),
     notes="""
+
+This is why
 
     """)
     s.close_section()
