@@ -791,6 +791,10 @@ to summarize, we have shown that
 - that a fixed length models captures some of this correlation, but that
 - our online bayesian changep[oint model better captures this correlation and that this may hint at the neural mechanisms used to anticipate in a dynamic environment
 
+the brain is not strongly a bayesian machine, but weakly
+
+
+
 perspectives:
 - interindividual differences
 - RL
