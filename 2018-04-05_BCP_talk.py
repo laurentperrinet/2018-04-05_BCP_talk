@@ -617,8 +617,8 @@ First, we initialize the first node to prior values
 
     """)
 
-    modes = ['fixed', 'expectation'] # 'max',  'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
-    for mode, mode_txt in zip(['fixed', 'expectation'], [' - Fixed window', ' - Full model']):
+    modes = ['expectation', 'fixed', ] # 'max',  'expectation',#for mode in ['expectation']:#, 'max']:# for mode in ['expectation', 'max']:
+    for mode, mode_txt in zip(['expectation', 'fixed', ], [' - Full model', ' - Fixed window', ]):
 
         figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_' + mode + '.png')
         if not os.path.isfile(figname):
@@ -690,7 +690,7 @@ if do_section[i_section]:
     #
     # """)
 
-    for mode, mode_txt in zip(['fixed', 'expectation'], [' - Fixed window', ' - Full model']):
+    for mode, mode_txt in zip(['expectation', 'fixed'], [' - Full model', ' - Fixed window', ]):
         for i_block in range(3):
             figname = os.path.join(figpath_talkbcp, 'bayesianchangepoint_exp_' + mode + '_' + str(i_block) + '.png')
             if not os.path.isfile(figname):
@@ -762,7 +762,7 @@ compared to the raw results which were using the true (hidden) probability, it s
 as a result, the inferred probability as a function of time constitutes a useful regressor
         """)
 
-    for txt in ['P_real', 'p_bet--v_a']: # TODO : make a sequence to uncover parts
+    for txt in ['P_real']: # TODO : make a sequence to uncover parts
         s.add_slide(content=s.content_figures(
     [os.path.join(figpath_GDR, txt + '.png')],
                 title=title, height=s.meta['height']*.75) + url,
