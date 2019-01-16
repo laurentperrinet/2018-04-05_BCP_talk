@@ -388,7 +388,7 @@ While being sensible to recording errors, this allows us to extract the anticipa
 
  * these accelarations values were here scaled according to their extremal values.
 
- * there seems to be a trend with the polarity of the accelration being negative for p values below .5 and positive for values above .5
+ * there seems to be a trend with the polarity of the acceleration being negative for p values below .5 and positive for values above .5
 
 
 
