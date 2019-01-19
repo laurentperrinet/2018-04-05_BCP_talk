@@ -4,4 +4,4 @@
 * Who: Laurent Perrinet and Chloé Pasturel and Anna Montagnini, INT
 * When: 5/4/2018
 * Where: INT, Marseille (France)
-* Slides: http://blog.invibe.net/files/2018-04-05_BCP_talk.html -  implemented using https://github.com/laurentperrinet/slides.py - code for slides: https://github.com/laurentperrinet/2018-04-05_BCP_talk
+* Slides: https://laurentperrinet.github.io/2018-04-05_BCP_talk -  implemented using https://github.com/laurentperrinet/slides.py - code for slides: https://github.com/laurentperrinet/2018-04-05_BCP_talk
