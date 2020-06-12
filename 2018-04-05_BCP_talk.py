@@ -56,7 +56,7 @@ meta = dict(
  bgcolor = "white",
  author='Laurent Perrinet and Chloé Pasturel and Anna Montagnini, INT',
  #author_link='Chloé Pasturel, Laurent Perrinet and Anna Montagnini',
- author_link='<a href="http://invibe.net">Laurent Perrinet</a>, Chloé Pasturel and Anna Montagnini',
+ author_link='<a href="https://laurentperrinet.github.io/">Laurent Perrinet</a>, Chloé Pasturel and Anna Montagnini',
    short_title='Principles and psychophysics of Active Inference',
  # title='Principles and psychophysics of Active Inference: Anticipating a dynamic, switching probabilistic bias in visual motion direction',
  #title='Principles and psychophysics of Active Inference in anticipating a dynamic, switching probabilistic bias',
