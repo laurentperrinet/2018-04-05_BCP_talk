@@ -11,7 +11,7 @@ html:
 page:
 	python3 $(SRC).py
 	cat /tmp/wiki.txt |pbcopy
-	open https://invibe.net/cgi-bin/index.cgi/Presentations/$(SRC)?action=edit
+	open https://URL.net/cgi-bin/index.cgi/Presentations/$(SRC)?action=edit
 
 show: html
 	open -a safari $(SRC).html
